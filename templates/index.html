@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff4e8">
+    <title>Quà 20/10 tặng Bùi Núi Đây</title>
+    <link rel="stylesheet" href="/static/style.css?v=wheel-fix-2">
+</head>
+<body>
+    <main class="page">
+        <div class="eyebrow">MỘT MÓN QUÀ ĐẶC BIỆT</div>
+        <h1>Quà 20/10 tặng Bùi Núi Đây</h1>
+        <p class="intro">Vòng quay có 4 phần quà với cơ hội trúng như nhau.</p>
+
+        <section class="draw-card" aria-label="Vòng quay trúng thưởng">
+            <div class="wheel-wrap">
+                <div class="pointer" aria-hidden="true"></div>
+                <canvas id="wheel" width="520" height="520" aria-label="Vòng quay gồm bốn phần quà"></canvas>
+            </div>
+            <div id="countdown" class="countdown" aria-live="polite"></div>
+            <button id="spinBtn" type="button" disabled>Đang kiểm tra vòng quay…</button>
+            <p id="status" class="status" aria-live="polite">Đang kết nối Supabase…</p>
+            <div id="result" class="result hidden" aria-live="polite">
+                <div class="result-title">Phần quà của bạn</div>
+                <img id="resultImage" alt="" class="hidden">
+                <div id="resultFallback" class="prize-placeholder hidden" aria-label="Ảnh phần quà tạm thời">
+                    <span class="gift-icon" aria-hidden="true">🎁</span>
+                    <span id="resultFallbackName"></span>
+                </div>
+                <div id="resultName" class="result-name"></div>
+            </div>
+        </section>
+        <p class="note">Bạn chỉ có một lượt quay. Chúc mừng Ngày Phụ nữ Việt Nam 20/10!</p>
+    </main>
+    <script>
+        const PRIZES = {{ prizes | tojson }};
+        const PRIZE_IMAGES = {{ prize_images | tojson }};
+    </script>
+    <script src="/static/script.js?v=wheel-fix-2"></script>
+</body>
+</html>
