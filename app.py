@@ -13,7 +13,12 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 SPIN_DURATION_SECONDS = 30
 PRIZES = ["Serect 1", "Serect 2", "Serect 3", "Serect 4"]
-PRIZE_IMAGE_FILES = [f"serect {index}.jpg" for index in range(1, 5)]
+PRIZE_IMAGE_NAMES = [
+    ["serect 1.jpg", "secret 1.jpg"],
+    ["serect 2.jpg", "secret 2.jpg"],
+    ["serect 3.jpg", "secret 3.jpg"],
+    ["serect 4.jpg", "secret 4.jpg"],
+]
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 PRIZE_IMAGE_DIRS = [os.path.join(APP_DIR, "image"), os.path.join(APP_DIR, "static", "image")]
 
@@ -84,17 +89,28 @@ def control_status():
 @app.route("/")
 def index():
     available_images = [
-        any(os.path.isfile(os.path.join(directory, filename)) for directory in PRIZE_IMAGE_DIRS)
-        for filename in PRIZE_IMAGE_FILES
+        find_prize_image(index) is not None
+        for index in range(len(PRIZES))
     ]
     return render_template("index.html", prizes=PRIZES, prize_images=available_images)
 
 
-@app.route("/prize-images/<path:filename>")
-def prize_image(filename):
+def find_prize_image(prize_index):
+    if not 0 <= prize_index < len(PRIZE_IMAGE_NAMES):
+        return None
     for directory in PRIZE_IMAGE_DIRS:
-        if os.path.isfile(os.path.join(directory, filename)):
-            return send_from_directory(directory, filename)
+        for filename in PRIZE_IMAGE_NAMES[prize_index]:
+            if os.path.isfile(os.path.join(directory, filename)):
+                return directory, filename
+    return None
+
+
+@app.route("/prize-images/<int:prize_index>")
+def prize_image(prize_index):
+    match = find_prize_image(prize_index)
+    if match:
+        directory, filename = match
+        return send_from_directory(directory, filename)
     abort(404)
 
 

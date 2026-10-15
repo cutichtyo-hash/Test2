@@ -1,18 +1,9 @@
 const SPIN_DURATION_MS = 30_000;
-const imageFiles = ["serect 1.jpg", "serect 2.jpg", "serect 3.jpg", "serect 4.jpg"];
 const wheel = document.getElementById("wheel");
 const ctx = wheel.getContext("2d");
 const spinBtn = document.getElementById("spinBtn");
 const statusText = document.getElementById("status");
 const countdown = document.getElementById("countdown");
-const images = imageFiles.map((file, index) => {
-    if (!PRIZE_IMAGES[index]) return null;
-    const img = new Image();
-    img.src = `/prize-images/${encodeURIComponent(file)}`;
-    img.onload = drawWheel;
-    return img;
-});
-
 const colors = ["#e9a7a0", "#f4cc82", "#86b3a1", "#92a9d1"];
 const segmentAngle = (Math.PI * 2) / PRIZES.length;
 let spinning = false;
@@ -36,37 +27,11 @@ function drawWheel() {
         ctx.stroke();
 
         const middle = start + segmentAngle / 2;
-        const image = images[index];
-        const imageSize = 106;
-        const imageRadius = 157;
-        if (image && image.complete && image.naturalWidth) {
-            const x = center + Math.cos(middle) * imageRadius - imageSize / 2;
-            const y = center + Math.sin(middle) * imageRadius - imageSize / 2;
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(x + imageSize / 2, y + imageSize / 2, imageSize / 2, 0, Math.PI * 2);
-            ctx.clip();
-            ctx.drawImage(image, x, y, imageSize, imageSize);
-            ctx.restore();
-        } else {
-            ctx.save();
-            ctx.fillStyle = "rgba(255, 250, 244, .75)";
-            ctx.beginPath();
-            ctx.arc(center + Math.cos(middle) * imageRadius, center + Math.sin(middle) * imageRadius, 38, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#60483e";
-            ctx.font = "32px Segoe UI Emoji, Segoe UI, sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("🎁", center + Math.cos(middle) * imageRadius, center + Math.sin(middle) * imageRadius);
-            ctx.restore();
-        }
-
         ctx.fillStyle = "#453c37";
-        ctx.font = "700 20px Segoe UI, sans-serif";
+        ctx.font = "700 23px Segoe UI, sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(prize, center + Math.cos(middle) * 76, center + Math.sin(middle) * 76);
+        ctx.fillText(prize, center + Math.cos(middle) * 120, center + Math.sin(middle) * 120);
     });
 
     ctx.beginPath();
@@ -180,7 +145,7 @@ async function spinWheel() {
                     resultImage.classList.remove("hidden");
                     resultFallback.classList.add("hidden");
                 };
-                resultImage.src = `/prize-images/${encodeURIComponent(imageFiles[prizeIndex])}`;
+                resultImage.src = `/prize-images/${prizeIndex}`;
                 resultImage.alt = result.prize || prizeName;
             }
             document.getElementById("result").classList.remove("hidden");
