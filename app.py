@@ -79,7 +79,7 @@ def control_status():
     rows = supabase_request(
         "GET",
         "draw_control",
-        {"id": "eq.1", "select": "enabled,spin_in_progress,started_at"},
+        {"id": "eq.1", "select": "enabled,spin_in_progress,started_at,prize_index,completed_at"},
     )
     if not rows:
         raise SupabaseError("Chưa có dòng cấu hình vòng quay trong Supabase.")
@@ -139,7 +139,11 @@ def start_spin():
     if not rows:
         return jsonify({"error": "Vòng quay đã được sử dụng hoặc đang diễn ra."}), 409
 
-    return jsonify({"prize_index": rows[0]["prize_index"], "duration": SPIN_DURATION_SECONDS})
+    return jsonify({
+        "prize_index": rows[0]["prize_index"],
+        "started_at": rows[0]["started_at"],
+        "duration": SPIN_DURATION_SECONDS,
+    })
 
 
 @app.route("/api/spin/finish", methods=["POST"])
