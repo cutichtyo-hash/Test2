@@ -104,7 +104,7 @@ async function refreshStatus() {
         } else {
             spinBtn.disabled = false;
             spinBtn.textContent = "QUAY NGAY";
-            statusText.textContent = "Sẵn sàng — bạn có một lượt quay.";
+            statusText.textContent = "Sẵn sàng — em có một lượt quay.";
         }
     } catch (error) {
         spinBtn.disabled = true;
