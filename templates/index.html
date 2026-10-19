@@ -22,7 +22,7 @@
             <button id="spinBtn" type="button" disabled>Đang kiểm tra vòng quay…</button>
             <p id="status" class="status" aria-live="polite">Đang kết nối Supabase…</p>
             <div id="result" class="result hidden" aria-live="polite">
-                <div class="result-title">Phần quà của bạn</div>
+                <div class="result-title">Phần quà của em</div>
                 <img id="resultImage" alt="" class="hidden">
                 <div id="resultFallback" class="prize-placeholder hidden" aria-label="Ảnh phần quà tạm thời">
                     <span class="gift-icon" aria-hidden="true">🎁</span>
@@ -31,7 +31,7 @@
                 <div id="resultName" class="result-name"></div>
             </div>
         </section>
-        <p class="note">Bạn chỉ có một lượt quay. Chúc mừng Ngày Phụ nữ Việt Nam 20/10!</p>
+        <p class="note">Em chỉ có một lượt quay. Chúc mừng Ngày Phụ nữ Việt Nam 20/10!</p>
     </main>
     <script>
         const PRIZES = {{ prizes | tojson }};
